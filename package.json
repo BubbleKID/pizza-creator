@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "live-server"
+    "start": "lite-server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KieraDOG/pizza-creator.git"
   },
   "dependencies": {
-    "live-server": "^1.2.0"
+    "lite-server": "^1.2.0"
   }
 }

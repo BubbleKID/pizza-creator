@@ -26,27 +26,29 @@
     }
     .pizza {
       width: 500px;
+      height: 350px;
       position: relative;
     }
     .pizza > * {
-      width: 100%;
-      height: 350px;
       position: absolute;
     }
-    .pizza img {
-      margin: 100px 20px;
-    }
-    .pizza-base {
-      width: 380px;
+    .pizza > .pizza-base {
+      width: 75%;
       left: 90px;
+    }
+    .pizza > .pizza-toppings {
+      width: 70%;
+      left: 100px;
+    }
+    .pizza > .pizza-board {
+      width: 100%;
+    }
+    .pizza img {
+      margin: 100px 20px 0;
     }
     .pizza-toppings img {
       margin-top: 120px;
       position: absolute;
-    }
-    .pizza-toppings {
-      width: 350px;
-      left: 100px;
     }
     .form {
       width: 100%;
@@ -60,24 +62,15 @@
       font-weight: 300;
       margin: 2rem 0;
     }
-    .details-row:not(:first-of-type),
-    .toppings-row:not(:first-of-type),
     .place-order {
       margin-top: 2rem;
     }
-    .details-row,
-    .toppings-row {
-      display: flex;
-      margin-left: -2rem;
+    .details-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2rem;
     }
-    .details-row > *,
-    .toppings-row > * {
-      padding-left: 2rem;
-    }
-    .details-row > * {
-      width: calc(100% * 1/3);
-    }
-    .details .text-box label {
+    .detail label {
       display: block;
       margin-bottom: 0.5rem;
       text-transform: uppercase;
@@ -85,7 +78,7 @@
       font-weight: bold;
       color: #6E7790;
     }
-    .details .text-box input {
+    .detail input {
       border-radius: 2px;
       border: 1px solid #d7d7e7;
       font-size: 1.2rem;
@@ -95,11 +88,20 @@
       width: 100%;
       box-sizing: border-box;
     }
-    .toppings-row > * {
-      width: 25%;
+    .toppings-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 2rem;
     }
     .topping {
       display: flex;
+      align-items: center;
+      background: #f2f2f2;
+      cursor: pointer;
+      box-sizing: border-box;
+      padding: 0;
+      border: 0;
+      outline: 0;
     }
     .topping img {
       width: 40px;
@@ -107,16 +109,7 @@
       padding: 5px;
       box-sizing: border-box;
       background: #e6e6e6;
-    }
-    .topping span {
-      display: block;
-      flex-grow: 1;
-      padding-left: 1rem;
-      background: #f2f2f2;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+      margin-right: 1rem;
     }
     .summary li {
       margin: 1rem 0;
@@ -128,7 +121,7 @@
       font-size: 1.5rem;
       text-align: right;
     }
-    .place-order button {
+    button[type="submit"] {
       width: 100%;
       background: #98C550;
       border: none;
@@ -139,10 +132,144 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .place-order button:hover {
+    button[type="submit"]:hover {
       background: #90ce2e;
     }
   </style>
+  <script>
+    const toppings = [{
+      // name: 'Anchovy', // 如果我想改一下咸鱼的名字 我只需要改这里就可以了
+      name: '咸鱼', // 我们再回到 slack 去
+      labelImage: './assets/toppings/anchovy.svg',
+      contentImage: './assets/toppings/anchovies.svg'      
+    }, {
+      name: 'Bacon',
+      labelImage: './assets/toppings/bacon.svg',
+      contentImage: './assets/toppings/bacons.svg',
+    }, {
+      name: 'Basil',
+      labelImage: './assets/toppings/basil.svg',
+      contentImage: './assets/toppings/basils.svg',
+    }, {
+      name: 'Chili',
+      labelImage: './assets/toppings/chili.svg',
+      contentImage: './assets/toppings/chilies.svg',
+    }, {
+      name: 'Mozzarella',
+      labelImage: './assets/toppings/mozzarella.svg',
+      contentImage: './assets/toppings/mozzarellas.svg',
+    }, {
+      name: 'Mushroom',
+      labelImage: './assets/toppings/mushroom.svg',
+      contentImage: './assets/toppings/mushrooms.svg',
+    }, {
+      name: 'Olive',
+      labelImage: './assets/toppings/olive.svg',
+      contentImage: './assets/toppings/olives.svg',
+    }, {
+      name: 'Onion',
+      labelImage: './assets/toppings/onion.svg',
+      contentImage: './assets/toppings/onions.svg',
+    }, {
+      name: 'Pepper',
+      labelImage: './assets/toppings/pepper.svg',
+      contentImage: './assets/toppings/peppers.svg',
+    }, {
+      name: 'Pepperoni',
+      labelImage: './assets/toppings/pepperoni.svg',
+      contentImage: './assets/toppings/pepperonis.svg',
+    }, {
+      name: 'Peppers',
+      labelImage: './assets/toppings/peppers.svg',
+      contentImage: './assets/toppings/pepperss.svg',
+    }, {
+      name: 'Sweetcorn',
+      labelImage: './assets/toppings/sweetcorn.svg',
+      contentImage: './assets/toppings/sweetcorns.svg',
+    }];
+
+    const selectedToppings = [];
+
+    function initializeToppingsChoiceForm () {
+      // 我们把这些东西抽象出去，这样更易于维护
+      const toppingsChoiceForm = document.getElementById('toppingsChoiceForm');
+      // 用 JS 去生成 topping choice form，让 JS 去写 HTML
+      // https://www.w3schools.com/jsref/met_node_appendchild.asp
+      // https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement#Web_component_example
+      // 这里我将会用 ES6 解构 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+      // toppings.forEach(topping => {
+      toppings.forEach(({ labelImage, name}) => {
+        // 去 slack 上打个 1
+        const img = document.createElement('img');
+        img.src = labelImage;
+        img.alt = name;
+
+        const span = document.createElement('span');
+        span.innerText = name;
+
+        const button = document.createElement('button');
+        button.className = 'topping';
+        button.type = 'button'; // 如果不给 button type 的话，浏览器可能会以为他是一个 submit button，从而触发 submit 操作，这是我们不希望的
+        // 我们这里就需要把 id 设置上
+        button.id = name;
+        button.appendChild(img);
+        button.appendChild(span);
+
+        // 我们要给 button 添加功能了，button 被点击的时候做一些神奇的操作
+        // ok 它不是, 它是一个赋值
+        // button.onclick = onToppingClicked;
+        // 我写个高阶函数，让大家看一下好的是什么样子的
+        button.onclick = enhancedOnToppingClicked(name);
+
+        toppingsChoiceForm.appendChild(button);
+      });
+    }
+
+    function enhancedOnToppingClicked (toppingId) {
+      return function () {
+        const isSelected = selectedToppings.includes(toppingId);
+        if (isSelected) {
+          const index = selectedToppings.indexOf(toppingId);
+          selectedToppings.splice(index, 1);
+          return; // 注意这里，如果isSelectd了，操作完成后就直接返回了，告诉代码不要继续往下跑了，节省内存
+        }
+        
+        // 只有在没有 return 的时候才会跑到这里，也就是没有 isSelected
+        selectedToppings.push(toppingId);
+      }
+    }
+
+    function onToppingClicked () {
+      // 我们现在创建一个数组，用来保存已经选中的 toppings
+      // 我们看一下浏览器给了我们什么东西让我们方便操作
+      // this 是这个 button 元素，我们现在需要从 button 元素里面提取到他的名字（或者id），让我们能够将 topping 添加到我们的数组里面去
+      // 我们尝试用id
+      const toppingId = this.id;
+      // 做一个小小的判断。如果已经在 selectedToppings 就把它移出去， 如果没有的话就添加进去
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+      const isSelected = selectedToppings.includes(toppingId);
+      if (isSelected) {
+        // https://www.w3schools.com/howto/howto_js_remove_class.asp
+        // 想错东西了，sorry
+        // this.classList.remove('active');
+        // https://stackoverflow.com/questions/5767325/how-do-i-remove-a-particular-element-from-an-array-in-javascript
+        const index = selectedToppings.indexOf(toppingId);
+        selectedToppings.splice(index, 1);
+      } else {
+        // https://www.w3schools.com/howto/howto_js_add_class.asp
+        // this.classList.add('active');
+        selectedToppings.push(toppingId); // 又写错，sorry
+      }
+
+      // 一切ok，我们去slack上
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // 这样别人看到这一段代码就知道我现在在干什么，如果另外一个人要维护的话，他就知道去哪里维护toppingsChoiceForm了
+      initializeToppingsChoiceForm();
+    });
+  </script>
 </head>
 <body>
   <section class="pizza-creator-app">
@@ -150,149 +277,98 @@
     <section class="pizza-viewer">
       <div class="pizza">
         <div class="pizza-board">
-          <img src="./assets/board.svg" alt="pizza-base">
+          <img src="./assets/board.svg" alt="Pizza board">
         </div>
         <div class="pizza-base">
-          <img src="./assets/base.svg" alt="pizza-base">
+          <img src="./assets/base.svg" alt="Pizza base">
         </div>
         <div class="pizza-toppings">
-          <img src="./assets/toppings/anchovies.svg" alt="anchovies">
-          <img src="./assets/toppings/bacons.svg" alt="bacons.svg">
-          <img src="./assets/toppings/basils.svg" alt="basils.svg">
-          <img src="./assets/toppings/chilies.svg" alt="chilies.svg">
-          <img src="./assets/toppings/mozzarellas.svg" alt="mozzarellas.svg">
-          <img src="./assets/toppings/mushrooms.svg" alt="mushrooms.svg">
-          <img src="./assets/toppings/olives.svg" alt="olives.svg">
-          <img src="./assets/toppings/onions.svg" alt="onions.svg">
-          <img src="./assets/toppings/peppers.svg" alt="peppers.svg">
+          <img src="./assets/toppings/anchovies.svg" alt="Anchovies">
+          <img src="./assets/toppings/bacons.svg" alt="Bacons">
+          <img src="./assets/toppings/basils.svg" alt="Basils">
+          <img src="./assets/toppings/chilies.svg" alt="Chilies">
+          <img src="./assets/toppings/mozzarellas.svg" alt="Mozzarellas">
+          <img src="./assets/toppings/mushrooms.svg" alt="Mushrooms">
+          <img src="./assets/toppings/olives.svg" alt="Olives">
+          <img src="./assets/toppings/onions.svg" alt="Onions">
+          <img src="./assets/toppings/peppers.svg" alt="Peppers">
         </div>
       </div>
     </section>
     <section class="form">
-      <section class="details">
-        <h2>Enter your details</h2>
-        <div class="details-row">
-          <div class="text-box">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name">
+      <form action="">
+        <section class="details">
+          <h2>Enter your details</h2>
+          <div class="details-container">
+            <div class="detail">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name">
+            </div>
+            <div class="detail">
+              <label for="email">Email</label>
+              <input type="text" id="email" name="email">
+            </div>
+            <div class="detail">
+              <label for="confirm_email">Confirm email</label>
+              <input type="text" id="confirm_email" name="confirm_email">
+            </div>
+            <div class="detail">
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address">
+            </div>
+            <div class="detail">
+              <label for=postcode"">Postcode</label>
+              <input type="text" id="postcode" name="postcode">
+            </div>
+            <div class="detail">
+              <label for="contact_number">Contact number</label>
+              <input type="text" id="contact_number" name="contact_number">
+            </div>
           </div>
-          <div class="text-box">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email">
+        </section>
+        <section class="toppings">
+          <h2>Choose your toppings</h2>
+          <div class="toppings-container" id="toppingsChoiceForm">
+            <!-- 这里不需要再写 HTML 了， 刚才的 JS 会生成 HTML -->
           </div>
-          <div class="text-box">
-            <label for="confirm_email">Confirm email</label>
-            <input type="text" id="confirm_email" name="confirm_email">
-          </div>
-        </div>
-        <div class="details-row">
-          <div class="text-box">
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address">
-          </div>
-          <div class="text-box">
-            <label for=postcode"">Postcode</label>
-            <input type="text" id="postcode" name="postcode">
-          </div>
-          <div class="text-box">
-            <label for="contact_number">Contact number</label>
-            <input type="text" id="contact_number" name="contact_number">
-          </div>
-        </div>
-      </section>
-      <section class="toppings">
-        <h2>Choose your toppings</h2>
-        <div class="toppings-row">
-          <div class="topping">
-            <img src="./assets/toppings/anchovy.svg" alt="Anchovy">
-            <span for="">Anchovy</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/bacon.svg" alt="Bacon">
-            <span for="">Bacon</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/basil.svg" alt="Basil">
-            <span for="">Basil</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/chili.svg" alt="Chili">
-            <span for="">Chili</span>
-          </div>
-        </div>
-        <div class="toppings-row">
-          <div class="topping">
-            <img src="./assets/toppings/mozzarella.svg" alt="Mozzarella">
-            <span for="">Mozzarella</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/mushroom.svg" alt="Mushroom">
-            <span for="">Mushroom</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/olive.svg" alt="Olive">
-            <span for="">Olive</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/onion.svg" alt="Onion">
-            <span for="">Onion</span>
-          </div>
-        </div>
-        <div class="toppings-row">
-          <div class="topping">
-            <img src="./assets/toppings/pepper.svg" alt="Pepper">
-            <span for="">Pepper</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/pepperoni.svg" alt="Pepperoni">
-            <span for="">Pepperoni</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/peppers.svg" alt="Peppers">
-            <span for="">Peppers</span>
-          </div>
-          <div class="topping">
-            <img src="./assets/toppings/sweetcorn.svg" alt="Sweetcorn">
-            <span for="">Sweetcorn</span>
-          </div>
-        </div>
-      </section>
-      <section class="summary">
-        <h2>Summary</h2>
-        <ul class="items">
-          <li>
-            <span class="item">Pizza</span>
-            <span class="price">$9.99</span>
-            <ul>
-              <li>
-                <span class="item">Onion</span>
-                <span class="price">$0.99</span>
-              </li>
-              <li>
-                <span class="item">Mushroom</span>
-                <span class="price">$0.99</span>
-              </li>
-              <li>
-                <span class="item">Bacon</span>
-                <span class="price">$0.99</span>
-              </li>
-              <li>
-                <span class="item">Anchovy</span>
-                <span class="price">$0.99</span>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <hr>
-        <p class="total-price">
-          Total: $13.86
-        </p>
-        <p class="place-order">
-          <button>
-            Place order
-          </button>
-        </p>
-      </section>
+        </section>
+        <section class="summary">
+          <h2>Summary</h2>
+          <ul class="items">
+            <li>
+              <span class="item">Pizza</span>
+              <span class="price">$9.99</span>
+              <ul>
+                <li>
+                  <span class="item">Onion</span>
+                  <span class="price">$0.99</span>
+                </li>
+                <li>
+                  <span class="item">Mushroom</span>
+                  <span class="price">$0.99</span>
+                </li>
+                <li>
+                  <span class="item">Bacon</span>
+                  <span class="price">$0.99</span>
+                </li>
+                <li>
+                  <span class="item">Anchovy</span>
+                  <span class="price">$0.99</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <hr>
+          <p class="total-price">
+            Total: $13.86
+          </p>
+          <p>
+            <button type="submit">
+              Place order
+            </button>
+          </p>
+        </section>
+      </form>
     </section>
   </section>
 </body>
