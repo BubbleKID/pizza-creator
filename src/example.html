@@ -211,8 +211,8 @@
         const button = document.createElement('button');
         button.className = 'topping';
         button.type = 'button'; // 如果不给 button type 的话，浏览器可能会以为他是一个 submit button，从而触发 submit 操作，这是我们不希望的
-        // 我们这里就需要把 id 设置上
         button.id = name;
+        // 我们这里就需要把 id 设置上
         button.appendChild(img);
         button.appendChild(span);
 

@@ -1,15 +1,15 @@
 {
-  "name": "pizza-creator",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "start": "lite-server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KieraDOG/pizza-creator.git"
-  },
-  "dependencies": {
-    "lite-server": "^1.2.0"
-  }
+    "name": "pizza-creator",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "live-server src"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KieraDOG/pizza-creator.git"
+    },
+    "dependencies": {
+        "live-server": "^1.2.0"
+    }
 }
