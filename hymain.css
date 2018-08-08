@@ -1,0 +1,180 @@
+h1 {
+    display: none;
+}
+
+h2 {
+    color: #6E7790;
+    font-size: 22px;
+    font-weight: 300;
+    margin: 1rem 0;
+}
+
+
+/* pizza view css */
+
+.pizzaCreatorMainViewer {
+    display: flex;
+    flex-flow: row;
+    margin-left: -4rem;
+    min-height: 100vh;
+}
+
+.pizzaCreatorMainViewer>* {
+    padding-left: 2rem;
+}
+
+.pizzaViewer {
+    background: #3A424F;
+}
+
+.pizza {
+    width: 500px;
+    height: 350px;
+    /* ??? position*/
+    position: relative;
+}
+
+.pizza>* {
+    position: absolute;
+}
+
+.pizza>.pizzaBoard {
+    /* position: absolute; */
+    width: 80%;
+    top: 50%;
+    left: 15%;
+}
+
+.pizza>.pizzaBase {
+    width: 55%;
+    top: 50%;
+    left: 33%;
+}
+
+.pizza>.pizzaToppings {
+    width: 70%;
+    top: 50%;
+    left: 33%;
+}
+
+.pizza>.pizzaToppingsLeft {
+    width: 70%;
+    top: 48%;
+    left: 27%;
+}
+
+.pizza>.pizzaToppingsRight {
+    width: 70%;
+    top: 55%;
+    left: 38%;
+}
+
+
+/* form css */
+
+
+/* details */
+
+.form {
+    width: 100%;
+    padding-right: 2rem;
+    height: 100vh;
+    overflow: auto;
+}
+
+.detailsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+}
+
+.detail label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #6E7790;
+}
+
+.detail input {
+    border-radius: 2px;
+    border: 1px solid #d7d7e7;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem 1rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* topping */
+
+.toppingContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+}
+
+.topping {
+    display: flex;
+    align-items: center;
+    background: #f2f2f2;
+    cursor: progress;
+    box-sizing: border-box;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+.topping img {
+    width: 30%;
+    padding: 3%;
+    box-sizing: border-box;
+    background: #e6e6e6;
+    margin-right: 1rem;
+}
+
+
+/* summary */
+
+.items {
+    display: block;
+    list-style-type: disc;
+    /* margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0px;
+    margin-right: 0px; */
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+li span:first-child {
+    text-align: -webkit-match-parent;
+}
+
+li span:nth-child(1) {
+    float: right;
+}
+
+.totalPrice {
+    font-size: 1.5rem;
+    text-align: right;
+    color: #0f0e0ebe;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background: #98C550;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+    border-radius: 5px;
+    cursor: progress;
+}
