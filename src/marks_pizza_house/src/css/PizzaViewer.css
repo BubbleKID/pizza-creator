@@ -79,6 +79,9 @@ h2{
 .detail input{
     display: block;
     border-radius:2px;
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.8);
+    padding: 0.5rem 1rem;
     border:1px solid #d7d7e7;
 }
 
@@ -106,12 +109,6 @@ h2{
     box-sizing: border-box;
     margin-right:1rem;
     background-color: #e6e6e6;
-}
-
-.items{
-}
-
-.item{
 }
 
 .price{
