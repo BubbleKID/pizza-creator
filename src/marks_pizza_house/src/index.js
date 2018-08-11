@@ -9,7 +9,8 @@ import Details from './components/Details';
 let content = (
     <section className="pizza-creator-app">
         <PizzaViewer />
-        <Details />           
+        <Details />   
+        
     </section>
 )
 ReactDOM.render(content, document.getElementById('root'));

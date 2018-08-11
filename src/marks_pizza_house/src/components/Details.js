@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-class Details extends Component { 
-    render() {
-        return ( 
+import Toppings from './Toppings';
+
+class Details extends Component {    
+
+    render() {             
+        return (   
             <section className="form">
+                
                 <h1>Mark's Pizza House</h1>
                 <section>
                     <h2>Enter your details</h2>
@@ -38,48 +42,12 @@ class Details extends Component {
 
                 <section>
                     <h2>Choose your toppings</h2>
-                    <div className="toppings-container">
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/anchovy.svg')} alt="Anchovy" /><span>Anchovy</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/bacon.svg')} alt="Bacon" /><span>Bacon</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/basil.svg')} alt="Basil" /><span>Basil</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/chili.svg')} alt="Chili" /><span>Chili</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/mozzarella.svg')} alt="Mozzarella" /><span>Mozzarella</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/mushroom.svg')} alt="" /><span>Mushroom</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/olive.svg')} alt=""/><span>Olive</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/onion.svg')} alt=""/><span>Onion</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/pepper.svg')} alt=""/><span>Pepper</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/pepperoni.svg')} alt=""/><span>Pepperoni</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/peppers.svg')} alt=""/><span>Peppers</span>
-                        </button>
-                        <button className="topping" type="button">
-                            <img src={require('../assets/toppings/sweetcorn.svg')} alt=""/><span>Sweetcorn</span>
-                        </button>
+                    <div className="toppings-container">      
+                        <Toppings />  
                     </div>
                 </section>
 
-
-                 <section>
+                <section>
                     <h2>Summary</h2>
                     <ul className="items">
                         <li>
@@ -108,10 +76,10 @@ class Details extends Component {
                     <hr/>
                     <p className="total-price">Total:$13.86</p>
                     <button type="submit">Place order</button>
-                </section>
-            </section>            
-        );
-    }
+                </section>                      
+            </section>         
+        );       
+    } 
 }
 
 export default Details;
