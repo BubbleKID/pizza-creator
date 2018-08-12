@@ -12,6 +12,9 @@
 # backup
 /backup
 
+# debug log
+npm-debug.log
+
 # misc
 .DS_Store
 .env.local

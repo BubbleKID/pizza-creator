@@ -1,12 +1,49 @@
 import React, { Component } from 'react';
-import Toppings from './Toppings';
-
-class Details extends Component {    
+import toppings from '../data/toppings.json';
+let sum = 0;
+let selectedToppings = [];
+class Details extends Component {   
+    
+    constructor(probs) {
+        super(probs);       
+        this.state = {
+            summary:selectedToppings,
+            toppings2:toppings                      
+        };
+    }
+   
+    onToppingClick2 = (e) =>{
+        let name = e.target.id;
+        let price = this.state.toppings2;
+        let offset = price.find(item => item.name === name).price*100;
+        // console.log( price.find(item => item.name === name).price.toFixed(2));
+        //debugger;
+        if (selectedToppings.includes(name)) {
+            var index = selectedToppings.indexOf(name);
+            selectedToppings.splice(index, 1);  
+            this.setState({
+                summary: selectedToppings            
+             })            
+            e.target.classList.remove('active');
+            sum-= parseFloat(offset);
+            console.log(sum);      
+            return;
+        }
+        selectedToppings.push(name);
+        sum += parseFloat(offset);
+        this.setState({
+            summary: selectedToppings          
+         })  
+        e.target.classList.add('active');
+        console.log(sum); 
+        
+        
+        //debugger
+    }
 
     render() {             
         return (   
-            <section className="form">
-                
+            <section className="form">                
                 <h1>Mark's Pizza House</h1>
                 <section>
                     <h2>Enter your details</h2>
@@ -33,8 +70,8 @@ class Details extends Component {
                                 <input type="text"/>
                             </div>
                             <div className="detail">
-                                    <label>CONTACT NUMBER</label>
-                                    <input type="text"/>
+                                <label>CONTACT NUMBER</label>
+                                <input type="text"/>
                             </div>                               
                         </div>
                     </form>
@@ -42,39 +79,36 @@ class Details extends Component {
 
                 <section>
                     <h2>Choose your toppings</h2>
-                    <div className="toppings-container">      
-                        <Toppings />  
+                    <div className="toppings-container">  
+                        {   toppings.map(item => {
+                                return (
+                                    <button key={item.name} className="topping" type="button" onClick={this.onToppingClick2} id={item.name}>                
+                                        <img  src={ require(`../assets/toppings/${item.labelImage}`)} alt={item.name} /><span>{item.name}</span>                   
+                                    </button>
+                                );
+                            })
+                        }                 
                     </div>
                 </section>
 
                 <section>
                     <h2>Summary</h2>
-                    <ul className="items">
-                        <li>
-                            <span className="item">Pizza</span>
-                            <span className="price">$9.99</span>
-                        </li>
-                        <ul>
-                            <li>
-                                <span className="item">Onion</span>
-                                <span className="price">$0.99</span>
-                            </li>
-                            <li>
-                                <span className="item">Mushroom</span>
-                                <span className="price">$0.99</span>
-                            </li>
-                            <li>
-                                <span className="item">Bacon</span>
-                                <span  className="price">$0.99</span>                    <span >$0.99</span>
-                            </li>
-                            <li>
-                                <span className="item">Anchovy</span>
-                                <span  className="price">$0.99</span>                    <span >$0.99</span>
-                            </li>
-                        </ul>
+                    <div> 
+                    <ul className="items">                      
+                    {   
+                        this.state.summary.map(item => {
+                            return (                    
+                                    <li  key={item}>
+                                        <span className="item" >{item}</span>
+                                        <span className="price">$0.99</span>                
+                                    </li>                          
+                            );
+                        })
+                    }   
                     </ul>
+                    </div>                
                     <hr/>
-                    <p className="total-price">Total:$13.86</p>
+                    <p className="total-price">Total:{"$" + (sum/100).toFixed(2)}</p>
                     <button type="submit">Place order</button>
                 </section>                      
             </section>         

@@ -99,6 +99,15 @@ h2{
   cursor: pointer;
   background:#f2f2f2;
 }
+
+
+.topping.active{
+
+  background: #1a98e1;
+  color: white;
+}
+
+
 .topping span{
   padding-right: 1rem;
 }
@@ -134,3 +143,4 @@ button[type="submit"]{
 button[type="submit"]:hover{
   background-color: #90ce2e;
 }
+
