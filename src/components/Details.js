@@ -9,18 +9,14 @@ class Details extends Component {
         this.state = {
             summary:selectedToppings,
             toppings2:toppings                      
-        };
-        //this.onToppingClick2 = this.onToppingClick2.bind(this);
+        };        
     }
    
-    onToppingClick = (e) =>{   
-        
-        //debugger; 
+    onToppingClick = (e) =>{  
         let name = e.currentTarget.id;
         let price = this.state.toppings2;
         let offset = price.find(item => item.name === name).price*100;
-        // console.log( price.find(item => item.name === name).price.toFixed(2));
-        //debugger;
+      
         if (selectedToppings.includes(name)) {
             var index = selectedToppings.indexOf(name);
             selectedToppings.splice(index, 1);  
@@ -29,7 +25,7 @@ class Details extends Component {
              })            
             e.currentTarget.classList.remove('active');
             sum-= parseFloat(offset);
-            console.log(sum);      
+            //console.log(sum);      
             return;
         }
         selectedToppings.push(name);
@@ -38,33 +34,41 @@ class Details extends Component {
             summary: selectedToppings          
          })  
         e.currentTarget.classList.add('active');
-        console.log(sum); 
-        
-        
-        //debugger
+        //console.log(sum); 
     }
 
-    handleChild(e) {
-        debugger
-        //e.stopPropagation();
-        //console.log('child');
-      }
-
+    addOrder = (e) =>{
+        e.preventDefault();
+        console.log(e.target.customerName.value)             
+        var newOrder = {
+            a: e.target.customerName.value,
+            b: e.target.email.value
+        };
+        var data = new FormData();
+        data.append( "json", JSON.stringify( newOrder ) );
+    
+        fetch('http://localhost:9000/process', {
+            method: 'post',
+            body: data
+        });
+       
+        alert("You order has placed successfuly!")
+    }
     render() {             
         return (   
-            <section className="form">                
+            <form className="form" method="POST" action="" onSubmit={this.addOrder} >                
                 <h1>Mark's Pizza House</h1>
                 <section>
                     <h2>Enter your details</h2>
-                    <form>
+                    <div >
                         <div className="details-container">
                             <div className="detail">
                                 <label>NAME</label>
-                                <input type="text"/>
+                                <input id="customerName" type="text"/>
                             </div>
                             <div className="detail">
                                 <label>EMAIL</label> 
-                                <input type="text"/>
+                                <input id="email" type="text"/>
                             </div>
                             <div className="detail">
                                 <label>CONFIRM EMAIL</label>
@@ -83,7 +87,7 @@ class Details extends Component {
                                 <input type="text"/>
                             </div>                               
                         </div>
-                    </form>
+                    </div>
                 </section>
 
                 <section>
@@ -120,7 +124,7 @@ class Details extends Component {
                     <p className="total-price">Total:{"$" + (sum/100).toFixed(2)}</p>
                     <button type="submit">Place order</button>
                 </section>                      
-            </section>         
+            </form>         
         );       
     } 
 }
