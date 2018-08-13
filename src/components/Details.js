@@ -10,10 +10,13 @@ class Details extends Component {
             summary:selectedToppings,
             toppings2:toppings                      
         };
+        //this.onToppingClick2 = this.onToppingClick2.bind(this);
     }
    
-    onToppingClick2 = (e) =>{
-        let name = e.target.id;
+    onToppingClick = (e) =>{   
+        
+        //debugger; 
+        let name = e.currentTarget.id;
         let price = this.state.toppings2;
         let offset = price.find(item => item.name === name).price*100;
         // console.log( price.find(item => item.name === name).price.toFixed(2));
@@ -24,7 +27,7 @@ class Details extends Component {
             this.setState({
                 summary: selectedToppings            
              })            
-            e.target.classList.remove('active');
+            e.currentTarget.classList.remove('active');
             sum-= parseFloat(offset);
             console.log(sum);      
             return;
@@ -34,12 +37,18 @@ class Details extends Component {
         this.setState({
             summary: selectedToppings          
          })  
-        e.target.classList.add('active');
+        e.currentTarget.classList.add('active');
         console.log(sum); 
         
         
         //debugger
     }
+
+    handleChild(e) {
+        debugger
+        //e.stopPropagation();
+        //console.log('child');
+      }
 
     render() {             
         return (   
@@ -82,7 +91,7 @@ class Details extends Component {
                     <div className="toppings-container">  
                         {   toppings.map(item => {
                                 return (
-                                    <button key={item.name} className="topping" type="button" onClick={this.onToppingClick2} id={item.name}>                
+                                    <button key={item.name} className="topping" type="button" onClick={this.onToppingClick} id={item.name}>                
                                         <img  src={ require(`../assets/toppings/${item.labelImage}`)} alt={item.name} /><span>{item.name}</span>                   
                                     </button>
                                 );
