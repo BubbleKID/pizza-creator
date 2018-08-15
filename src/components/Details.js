@@ -57,7 +57,7 @@ class Details extends Component {
     render() {             
         return (   
             <form className="form" method="POST" action="" onSubmit={this.addOrder} >                
-                <h1>Mark's Pizza House</h1>
+                <h1>Marks Pizza House</h1>
                 <section>
                     <h2>Enter your details</h2>
                     <div >
@@ -96,7 +96,7 @@ class Details extends Component {
                         {   toppings.map(item => {
                                 return (
                                     <button key={item.name} className="topping" type="button" onClick={this.onToppingClick} id={item.name}>                
-                                        <img  src={ require(`../assets/toppings/${item.labelImage}`)} alt={item.name} /><span>{item.name}</span>                   
+                                        <img  src={'assets/toppings/'+ item.labelImage} alt={item.name} /><span>{item.name}</span>                   
                                     </button>
                                 );
                             })
