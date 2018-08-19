@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import toppings from '../data/toppings.json';
+import Summary from './Summary';
+import ToppingsForm from './ToppingsForm';
+import Total from './Total';
+
 let sum = 0;
 let selectedToppings = [];
 class Details extends Component {   
@@ -7,34 +10,25 @@ class Details extends Component {
     constructor(probs) {
         super(probs);       
         this.state = {
-            summary:selectedToppings,
-            toppings2:toppings                      
+            stateSelectToppings:selectedToppings                             
         };        
     }
    
-    onToppingClick = (e) =>{  
-        let name = e.currentTarget.id;
-        let price = this.state.toppings2;
-        let offset = price.find(item => item.name === name).price*100;
-      
-        if (selectedToppings.includes(name)) {
-            var index = selectedToppings.indexOf(name);
+    onToppingClick = (topping) =>{    
+        if (selectedToppings.includes(topping)) {
+            var index = selectedToppings.indexOf(topping);
             selectedToppings.splice(index, 1);  
             this.setState({
                 summary: selectedToppings            
-             })            
-            e.currentTarget.classList.remove('active');
-            sum-= parseFloat(offset);
-            //console.log(sum);      
+            })             
             return;
+        }else{
+            selectedToppings.push(topping);
         }
-        selectedToppings.push(name);
-        sum += parseFloat(offset);
         this.setState({
-            summary: selectedToppings          
-         })  
-        e.currentTarget.classList.add('active');
-        //console.log(sum); 
+            summary: selectedToppings,
+            //disPlay: sum         
+         })   
     }
 
     addOrder = (e) =>{
@@ -64,27 +58,27 @@ class Details extends Component {
                         <div className="details-container">
                             <div className="detail">
                                 <label>NAME</label>
-                                <input id="customerName" type="text"/>
+                                <input id="customerName" placeholder="John Smith" type="text"/>
                             </div>
                             <div className="detail">
                                 <label>EMAIL</label> 
-                                <input id="email" type="text"/>
+                                <input id="email" placeholder="Enter your email" type="text"/>
                             </div>
                             <div className="detail">
                                 <label>CONFIRM EMAIL</label>
-                                <input type="text"/>
+                                <input type="text" placeholder="Confirm your email"/>
                             </div>
                             <div className="detail">
                                 <label>ADDRESS</label>
-                                <input type="text"/>
+                                <input type="text" placeholder="44 Pizza Street"/>
                             </div>
                             <div className="detail">
                                 <label>CONFIRM EMAIL</label>
-                                <input type="text"/>
+                                <input type="text" placeholder="3000"/>
                             </div>
                             <div className="detail">
                                 <label>CONTACT NUMBER</label>
-                                <input type="text"/>
+                                <input type="text" placeholder="01 2345 6789"/>
                             </div>                               
                         </div>
                     </div>
@@ -92,36 +86,18 @@ class Details extends Component {
 
                 <section>
                     <h2>Choose your toppings</h2>
-                    <div className="toppings-container">  
-                        {   toppings.map(item => {
-                                return (
-                                    <button key={item.name} className="topping" type="button" onClick={this.onToppingClick} id={item.name}>                
-                                        <img  src={'assets/toppings/'+ item.labelImage} alt={item.name} /><span>{item.name}</span>                   
-                                    </button>
-                                );
-                            })
-                        }                 
-                    </div>
+                    <ToppingsForm selectedToppings={ this.state.stateSelectToppings } onToppingClick={ this.onToppingClick} />
                 </section>
 
                 <section>
                     <h2>Summary</h2>
                     <div> 
-                    <ul className="items">                      
-                    {   
-                        this.state.summary.map(item => {
-                            return (                    
-                                    <li  key={item}>
-                                        <span className="item" >{item}</span>
-                                        <span className="price">$0.99</span>                
-                                    </li>                          
-                            );
-                        })
-                    }   
+                    <ul className="items">     
+                    <Summary selectedToppings = { this.state.stateSelectToppings }/>                 
                     </ul>
                     </div>                
                     <hr/>
-                    <p className="total-price">Total:{"$" + (sum/100).toFixed(2)}</p>
+                    <Total selectedToppings = { this.state.stateSelectToppings }/>
                     <button type="submit">Place order</button>
                 </section>                      
             </form>         

@@ -140,6 +140,9 @@ button[type="submit"]{
   cursor: pointer;
 }
 
+.summary{
+  color:rgba(0,0,0,0.7);
+}
 button[type="submit"]:hover{
   background-color: #90ce2e;
 }
