@@ -7,7 +7,7 @@ class ToppingsForm extends Component {
                 {   
                     allToppings.map(topping => {
                         return (
-                            <button 
+                            <label 
                                 key={topping.name}  
                                 className={`topping ${this.props.selectedToppings.includes(topping) && 'active'}`} 
                                 type="button" 
@@ -15,7 +15,7 @@ class ToppingsForm extends Component {
                                 id={topping.name}
                             >                
                                 <img  src={'assets/toppings/'+ topping.labelImage} alt={topping.name} /><span>{topping.name}</span>                   
-                            </button>
+                            </label>
                         );
                     })
                 }                 

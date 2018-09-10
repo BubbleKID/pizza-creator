@@ -89,6 +89,8 @@ h2{
   display: grid;
   grid-template-columns:repeat(4, 1fr);
   grid-gap:2rem;
+  
+
 }
 .topping{
   display: flex;
@@ -98,6 +100,7 @@ h2{
   padding: 0;
   cursor: pointer;
   background:#f2f2f2;
+  /*border-radius: 3px;*/
 }
 
 
@@ -118,6 +121,7 @@ h2{
   box-sizing: border-box;
   margin-right:1rem;
   background-color: #e6e6e6;
+  
 }
 
 .price{
@@ -143,6 +147,7 @@ button[type="submit"]{
 .summary{
   color:rgba(0,0,0,0.7);
 }
+
 button[type="submit"]:hover{
   background-color: #90ce2e;
 }
