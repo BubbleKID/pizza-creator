@@ -1,4 +1,6 @@
-ReactJS practice
-Host: www.marksama.com.au
+# React Pizza Creater
+Check out the [live demo](http://www.marksama.com.au/)
+
+
 
 
