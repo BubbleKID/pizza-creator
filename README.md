@@ -15,5 +15,4 @@ Created a react version of pizza creator
 ## Features
 Allow user pick pizza toppings and the display total pricedynamically 
 
-## License
-MIT © [BubbleKID]()
+
