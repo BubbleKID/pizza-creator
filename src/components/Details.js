@@ -1,9 +1,38 @@
 import React, { Component } from 'react';
 import Summary from './Summary';
+import PizzaSize from './PizzaSize';
 import ToppingsForm from './ToppingsForm';
 import Total from './Total';
+import 'font-awesome/css/font-awesome.min.css';
 
-let sum = 0;
+const styles = {
+    addPizzaBtn: {
+        background:"none",
+        cursor: "pointer",
+        border: "none",
+        color: "#97C747",
+        fontSize: "15px",
+        outline: "none",
+        padding: "10px 15px",
+        float: "right"
+    },
+    creatorHeader: {
+        fontSize: "16px",
+        padding: "10px 15px",
+        color: "rgba(0,0,0,0.6)",
+        position: "relative",
+        cursor: "pointer",
+        borderBottom: "1px solid rgba(0,0,0,0.1)"
+
+    },
+    creatorH3 : {
+        color: "#6E7790",
+        fontSize: "16px",
+        position: "relative",
+        marginBottom: "10px"
+    }
+};     
+
 let selectedToppings = [];
 class Details extends Component {   
     
@@ -26,8 +55,7 @@ class Details extends Component {
             selectedToppings.push(topping);
         }
         this.setState({
-            summary: selectedToppings,
-            //disPlay: sum         
+            summary: selectedToppings,   
          })   
     }
 
@@ -45,10 +73,11 @@ class Details extends Component {
             method: 'post',
             body: data
         });
-       
         alert("You order has placed successfuly!")
     }
-    render() {             
+
+
+    render() {         
         return (   
             <form className="form" method="POST" action="" onSubmit={this.addOrder} >                
                 <h1>Marks Pizza House</h1>
@@ -85,8 +114,22 @@ class Details extends Component {
                 </section>
 
                 <section>
-                    <h2>Choose your toppings</h2>
-                    <ToppingsForm selectedToppings={ this.state.stateSelectToppings } onToppingClick={ this.onToppingClick} />
+                    <h2>Choose your pizzas 
+                        <button style={ styles.addPizzaBtn } type="button">
+                            <i className="fa fa-plus"></i>Add pizza
+                        </button>
+                    </h2>
+                    <div>
+                        <div style={ styles.creatorHeader }>
+                            <i className="fa fa-chevron-up"></i>Pizza 1
+                            <i className="fa fa-check"></i>
+                        </div>
+                        <h3 style={ styles.creatorH3 }>Select the size</h3>
+                        <PizzaSize/>
+                        <h3 style={ styles.creatorH3 }>Choose your toppings</h3>
+                        <ToppingsForm selectedToppings={ this.state.stateSelectToppings } onToppingClick={ this.onToppingClick} />
+                    </div>
+                   
                 </section>
 
                 <section>

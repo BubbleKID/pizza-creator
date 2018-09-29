@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-import './css/index.css';
+import './styles/index.css';
 import PizzaViewer from './components/PizzaViewer';
 import Details from './components/Details';
 
