@@ -30,16 +30,21 @@ const styles = {
         fontSize: "16px",
         position: "relative",
         marginBottom: "10px"
+    },
+    checkIcon:{
+        "color": "#98C550"
     }
 };     
 
 let selectedToppings = [];
+let selectedSize = [];
 class Details extends Component {   
     
     constructor(probs) {
         super(probs);       
         this.state = {
-            stateSelectToppings:selectedToppings                             
+            stateSelectToppings:selectedToppings,
+            stateSelectSize:selectedSize                              
         };        
     }
    
@@ -57,6 +62,24 @@ class Details extends Component {
         this.setState({
             summary: selectedToppings,   
          })   
+    }
+
+    onSizeClick = (size) =>{  
+
+        if (selectedSize.includes(size)) {
+            var index = selectedSize.indexOf(size);
+            selectedSize.splice(index, 1);  
+            this.setState({
+                summary: selectedSize            
+            })             
+            return;
+        }else{
+            selectedSize.push(size);
+        }
+        this.setState({
+            summary: selectedSize,   
+         })   
+        debugger
     }
 
     addOrder = (e) =>{
@@ -122,10 +145,10 @@ class Details extends Component {
                     <div>
                         <div style={ styles.creatorHeader }>
                             <i className="fa fa-chevron-up"></i>Pizza 1
-                            <i className="fa fa-check"></i>
+                            <i className="fa fa-check" style={styles.checkIcon}></i>
                         </div>
                         <h3 style={ styles.creatorH3 }>Select the size</h3>
-                        <PizzaSize/>
+                        <PizzaSize selectedSize = {this.state.stateSelectSize } onSizeClick={ this.onSizeClick } />
                         <h3 style={ styles.creatorH3 }>Choose your toppings</h3>
                         <ToppingsForm selectedToppings={ this.state.stateSelectToppings } onToppingClick={ this.onToppingClick} />
                     </div>

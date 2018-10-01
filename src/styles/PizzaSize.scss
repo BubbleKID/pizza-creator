@@ -5,6 +5,7 @@
   
   .pizza-size {
     &__item {
+      box-sizing: border-box;
       margin: 0 0 20px;
       font-size: 16px;
       color: rgba(0, 0, 0, 0.7);
@@ -30,6 +31,7 @@
         font-weight: 400;
   
         .pizza-size__plate {
+          
           background: #f3f3f3;
           border: 3px solid darken(#f3f3f3, 10%);
         }
@@ -58,6 +60,7 @@
     }
   
     &__pizza {
+      box-sizing: border-box;
       background: #FEDB79;
       border: 2px solid #DEB989;
       height: 60px;

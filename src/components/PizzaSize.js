@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/PizzaSize.scss';
+
 const styles = {
     sizeSection:{
         "display": "flex",
@@ -25,35 +26,33 @@ const styles = {
         "padding": "0",
         "position": "absolute",
         "width": "1px"
-    } 
+    }
 }
 
 function SizeTemplate(props) {
-    return      <label style={styles.sizeLabel}>
-                    <input  style={styles.sizeRadio} type="radio"></input>
-                    <div >
-                        {props.sizename} 
-                        <div className ="pizza-size__plate">
-                            <div className="pizza-size__pizza pizza-size__pizza--large" >
-                                <div className="pizza-size__pizza__line"></div>
-                                <div className="pizza-size__pizza__line"></div>
-                                <div className="pizza-size__pizza__line"></div>
-                                <div className="pizza-size__pizza__line"></div>
-                                
-                            </div>
+    return  <label className="pizza-size__item"   >
+                <input  style={styles.sizeRadio} type="radio"></input>
+                <div >
+                    {props.sizename} 
+                    <div className ="pizza-size__plate" onClick={() => props.onSizeClick()} >
+                        <div className={`pizza-size__pizza pizza-size__pizza--${props.size}`} >
+                            <div className="pizza-size__pizza__line"></div>
+                            <div className="pizza-size__pizza__line"></div>
+                            <div className="pizza-size__pizza__line"></div>
+                            <div className="pizza-size__pizza__line"></div>              
                         </div>
                     </div>
-                </label>;
-               
+                </div>
+            </label>           
 }
 
 class PizzaSize extends Component {   
     render() {
         return(     
             <div style={styles.sizeSection}>                                                                            
-              <SizeTemplate sizename={`Large(13")`} size={13}/>
-              <SizeTemplate sizename={`Medium(11")`} size={11}/>
-              <SizeTemplate sizename={`Small(9")`} size={9}/>
+              <SizeTemplate sizename={`Large(13")`} size={"large"} onSizeClick={() => this.props.onSizeClick("large")}/>
+              <SizeTemplate sizename={`Medium(11")`} size={"medium"} onSizeClick={() => this.props.onSizeClick("medium")}/>
+              <SizeTemplate sizename={`Small(9")`} size={"small"} onSizeClick={() => this.props.onSizeClick("small")}/>
             </div>                                         
         )
     };
