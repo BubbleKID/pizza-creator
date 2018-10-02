@@ -37,7 +37,10 @@ const styles = {
 };     
 
 let selectedToppings = [];
-let selectedSize = [];
+let selectedSize = [{
+    "name" : "Small(9\")",
+    "size": "small",
+    "price":  9.99}];
 class Details extends Component {   
     
     constructor(probs) {
@@ -64,39 +67,28 @@ class Details extends Component {
          })   
     }
 
-    onSizeClick = (size) =>{  
-
-        if (selectedSize.includes(size)) {
-            var index = selectedSize.indexOf(size);
-            selectedSize.splice(index, 1);  
-            this.setState({
-                summary: selectedSize            
-            })             
-            return;
-        }else{
-            selectedSize.push(size);
-        }
+    onSizeClick = (pizza) =>{  
+        selectedSize.splice(0,selectedSize.length);;
+        selectedSize.push(pizza);
         this.setState({
-            summary: selectedSize,   
-         })   
-        debugger
+            summary: selectedSize            
+        })             
     }
 
     addOrder = (e) =>{
-        e.preventDefault();
-        console.log(e.target.customerName.value)             
-        var newOrder = {
-            a: e.target.customerName.value,
-            b: e.target.email.value
-        };
-        var data = new FormData();
-        data.append( "json", JSON.stringify( newOrder ) );
+        // e.preventDefault();                    
+        // var newOrder = {
+        //     a: e.target.customerName.value,
+        //     b: e.target.email.value
+        // };
+        // var data = new FormData();
+        // data.append( "json", JSON.stringify( newOrder ) );
     
-        fetch('http://localhost:9000/process', {
-            method: 'post',
-            body: data
-        });
-        alert("You order has placed successfuly!")
+        // fetch('http://localhost:9000/process', {
+        //     method: 'post',
+        //     body: data
+        // });
+        // alert("You order has placed successfuly!")
     }
 
 
@@ -159,11 +151,11 @@ class Details extends Component {
                     <h2>Summary</h2>
                     <div> 
                     <ul className="items">     
-                    <Summary selectedToppings = { this.state.stateSelectToppings }/>                 
+                    <Summary selectedToppings = { this.state.stateSelectToppings } selectedSize = {this.state.stateSelectSize } />                 
                     </ul>
                     </div>                
                     <hr/>
-                    <Total selectedToppings = { this.state.stateSelectToppings }/>
+                    <Total selectedToppings = { this.state.stateSelectToppings } selectedSize = {this.state.stateSelectSize }/>
                     <button type="submit">Place order</button>
                 </section>                      
             </form>         

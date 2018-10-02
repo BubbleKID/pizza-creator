@@ -1,0 +1,17 @@
+[   
+    {
+        "name" : "Large(13\")",
+        "size": "large",
+        "price": 16.99
+    }, 
+    {
+        "name" : "Medium(11\")",
+        "size": "medium",
+        "price": 12.99
+    }, 
+    {
+        "name" : "Small(9\")",
+        "size": "small",
+        "price":  9.99
+    }
+]

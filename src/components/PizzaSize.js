@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/PizzaSize.scss';
+import allSizes from '../data/pizzas.json';
 
 const styles = {
     sizeSection:{
@@ -30,12 +31,12 @@ const styles = {
 }
 
 function SizeTemplate(props) {
-    return  <label className="pizza-size__item"   >
+    return  <label className={`pizza-size__item ${props.selectedSize.includes(props.pizza) && 'pizza-size__item--active'}`} >
                 <input  style={styles.sizeRadio} type="radio"></input>
                 <div >
-                    {props.sizename} 
+                    {props.pizza.name} 
                     <div className ="pizza-size__plate" onClick={() => props.onSizeClick()} >
-                        <div className={`pizza-size__pizza pizza-size__pizza--${props.size}`} >
+                        <div className={`pizza-size__pizza pizza-size__pizza--${props.pizza.size}`} >
                             <div className="pizza-size__pizza__line"></div>
                             <div className="pizza-size__pizza__line"></div>
                             <div className="pizza-size__pizza__line"></div>
@@ -46,13 +47,17 @@ function SizeTemplate(props) {
             </label>           
 }
 
-class PizzaSize extends Component {   
+class PizzaSize extends Component {  
     render() {
         return(     
-            <div style={styles.sizeSection}>                                                                            
-              <SizeTemplate sizename={`Large(13")`} size={"large"} onSizeClick={() => this.props.onSizeClick("large")}/>
-              <SizeTemplate sizename={`Medium(11")`} size={"medium"} onSizeClick={() => this.props.onSizeClick("medium")}/>
-              <SizeTemplate sizename={`Small(9")`} size={"small"} onSizeClick={() => this.props.onSizeClick("small")}/>
+            <div style={styles.sizeSection}>                                                                          
+              {   
+                    allSizes.map(pizza => {                 
+                        return (                            
+                            <SizeTemplate key={pizza.name} pizza={pizza} selectedSize={this.props.selectedSize} onSizeClick={() => this.props.onSizeClick(pizza)}/>
+                        );
+                    })
+                }    
             </div>                                         
         )
     };

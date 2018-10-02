@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
+import PizzaSize from './PizzaSize';
 class Summary extends Component {           
     render() {
         return(     
-            <div>                                                                            
+            <div>   
+                {                             
+                    this.props.selectedSize.map(
+                        pizza=>{
+                            //console.log(pizza);
+                            return(
+                                <li key={pizza.name}>
+                                    <span>{pizza.size}  pizza</span>
+                                    <span className="price">{"$" + pizza.price}</span>             
+                                </li>
+                            )
+                        }      
+                    ) 
+                }                                                                              
                 {                    
                     this.props.selectedToppings.map(topping => {
                         return (                                                
@@ -12,7 +26,8 @@ class Summary extends Component {
                                 </li>                                                                                       
                         );
                     }) 
-                }               
+                }   
+                            
             </div>                                         
         )
     };

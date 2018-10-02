@@ -2,16 +2,24 @@ import React, { Component } from 'react';
 
 class ToppingsForm extends Component {    
     render() {
-        let totalPrice = 9.99;
-        let displayPrice = totalPrice.toFixed(2);
+        let totalPrice = 0;
+        let displayPrice = 0;
+
+        this.props.selectedSize.map(pizza=>
+            {   
+                totalPrice += pizza.price;
+                displayPrice = totalPrice.toFixed(2);        
+                return  displayPrice ;               
+            }
+        )
+
         this.props.selectedToppings.map(topping=>
             {   
                 totalPrice += topping.price;
                 displayPrice = totalPrice.toFixed(2);        
                 return  displayPrice ;               
             }
-        )
-
+        )       
         return(   
             <p className="total-price">Total:$ { displayPrice } </p>
         )
