@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PizzaSize from './PizzaSize';
 class Summary extends Component {           
     render() {
         return(     
             <div>   
+                 
                 {                             
                     this.props.selectedSize.map(
                         pizza=>{

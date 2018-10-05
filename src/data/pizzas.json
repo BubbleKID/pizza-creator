@@ -1,16 +1,16 @@
 [   
     {
-        "name" : "Large(13\")",
+        "name" : "Large(13 inch)",
         "size": "large",
         "price": 16.99
     }, 
     {
-        "name" : "Medium(11\")",
+        "name" : "Medium(11 inch)",
         "size": "medium",
         "price": 12.99
     }, 
     {
-        "name" : "Small(9\")",
+        "name" : "Small(9 inch)",
         "size": "small",
         "price":  9.99
     }
