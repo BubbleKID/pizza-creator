@@ -38,9 +38,11 @@ const styles = {
 
 let selectedToppings = [];
 let selectedSize = [{
-    "name" : "Small(9\")",
+    "name" : "Small(9 inch)",
     "size": "small",
-    "price":  9.99}];
+    "price":  9.99
+}];
+
 class Details extends Component {   
     
     constructor(probs) {
@@ -127,7 +129,6 @@ class Details extends Component {
                         </div>
                     </div>
                 </section>
-
                 <section>
                     <h2>Choose your pizzas 
                         <button style={ styles.addPizzaBtn } type="button">

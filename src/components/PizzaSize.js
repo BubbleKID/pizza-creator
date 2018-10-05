@@ -31,7 +31,10 @@ const styles = {
 }
 
 function SizeTemplate(props) {
-    return  <label className={`pizza-size__item ${props.selectedSize.includes(props.pizza) && 'pizza-size__item--active'}`} >
+    console.log(props.pizza.name);
+    console.log(props.selectedSize[0].name);
+    //debugger
+    return  <label className={`pizza-size__item ${props.selectedSize[0].name === props.pizza.name && 'pizza-size__item--active'}`} >
                 <input  style={styles.sizeRadio} type="radio"></input>
                 <div >
                     {props.pizza.name} 
