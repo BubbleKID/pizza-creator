@@ -12,7 +12,7 @@ class ToppingsForm extends Component {
                 return  displayPrice ;               
             }
         )
-
+        
         this.props.selectedToppings.map(topping=>
             {   
                 totalPrice += topping.price;

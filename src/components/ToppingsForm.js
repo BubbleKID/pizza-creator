@@ -18,8 +18,7 @@ class ToppingsForm extends Component {
                             </label>
                         );
                     })
-                }    
-                             
+                }                       
             </div>                                    
         )
     };

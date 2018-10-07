@@ -23,7 +23,6 @@ const styles = {
         position: "relative",
         cursor: "pointer",
         borderBottom: "1px solid rgba(0,0,0,0.1)"
-
     },
     creatorH3 : {
         color: "#6E7790",
@@ -44,7 +43,6 @@ let selectedSize = [{
 }];
 
 class Details extends Component {   
-    
     constructor(probs) {
         super(probs);       
         this.state = {
@@ -78,21 +76,7 @@ class Details extends Component {
     }
 
     addOrder = (e) =>{
-        // e.preventDefault();                    
-        // var newOrder = {
-        //     a: e.target.customerName.value,
-        //     b: e.target.email.value
-        // };
-        // var data = new FormData();
-        // data.append( "json", JSON.stringify( newOrder ) );
-    
-        // fetch('http://localhost:9000/process', {
-        //     method: 'post',
-        //     body: data
-        // });
-        // alert("You order has placed successfuly!")
     }
-
 
     render() {         
         return (   

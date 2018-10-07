@@ -31,9 +31,6 @@ const styles = {
 }
 
 function SizeTemplate(props) {
-    console.log(props.pizza.name);
-    console.log(props.selectedSize[0].name);
-    //debugger
     return  <label className={`pizza-size__item ${props.selectedSize[0].name === props.pizza.name && 'pizza-size__item--active'}`} >
                 <input  style={styles.sizeRadio} type="radio"></input>
                 <div >
@@ -54,13 +51,13 @@ class PizzaSize extends Component {
     render() {
         return(     
             <div style={styles.sizeSection}>                                                                          
-              {   
-                    allSizes.map(pizza => {                 
-                        return (                            
-                            <SizeTemplate key={pizza.name} pizza={pizza} selectedSize={this.props.selectedSize} onSizeClick={() => this.props.onSizeClick(pizza)}/>
-                        );
-                    })
-                }    
+            {   
+                allSizes.map(pizza => {                 
+                    return (                            
+                        <SizeTemplate key={pizza.name} pizza={pizza} selectedSize={this.props.selectedSize} onSizeClick={() => this.props.onSizeClick(pizza)}/>
+                    );
+                })
+            }    
             </div>                                         
         )
     };

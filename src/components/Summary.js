@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 class Summary extends Component {           
     render() {
         return(     
-            <div>   
-                 
+            <div>                   
                 {                             
                     this.props.selectedSize.map(
                         pizza=>{
-                            //console.log(pizza);
                             return(
                                 <li key={pizza.name}>
                                     <span>{pizza.size}  pizza</span>
@@ -26,8 +24,7 @@ class Summary extends Component {
                                 </li>                                                                                       
                         );
                     }) 
-                }   
-                            
+                }                       
             </div>                                         
         )
     };
